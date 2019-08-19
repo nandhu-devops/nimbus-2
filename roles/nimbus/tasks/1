@@ -1,0 +1,62 @@
+---
+ - name: crteate storm root directory
+   file: path={{storm_root_dir}} state=directory owner={{storm_owner}} group={{storm_group}}
+
+ - name: download apache storm
+   get_url: dest={{storm_root_dir}} url="{{apache_mirror}}/storm/apache-storm-{{storm_version}}/apache-storm-{{storm_version}}.tar.gz"
+
+ - name: uncompress the storm package
+   #check_mode: yes
+   unarchive:
+           src: "{{storm_root_dir}}/apache-storm-{{storm_version}}.tar.gz"
+           dest: "{{storm_root_dir}}"
+           group: "{{storm_group}}"
+           owner: "{{storm_owner}}"
+          
+ - name: file permission
+   file:
+           path: "{{storm_root_dir}}/apache-storm-{{storm_version}}"
+           group: "{{storm_group}}"
+           owner: "{{storm_owner}}"
+           recurse: yes
+
+
+ - name: configure stormyml
+   #check_mode: yes
+   blockinfile:
+           path: "{{storm_root_dir}}/apache-storm-{{storm_version}}/conf/storm.yaml"
+           block: |
+                   storm.zookeeper.servers:
+                           - "localhost"
+                   storm.local.dir: "{{storm_root_dir}}/apache-storm-{{storm_version}}"
+                   nimbus.host: "localhost"
+                   supervisor.slots.ports:
+                           - 6700
+                           - 6701
+                           - 6702
+                           - 6703
+ - name: start nimbus
+   #sudo: yes
+   become_user: root
+   shell: |
+           sudo set timeout 200
+           sudo /home/ubuntu/nimbus/apache-storm-1.2.3/bin/storm nimbus
+   args:
+          executable: /home/ubuntu/nimbus/apache-storm-1.2.3/bin 
+
+ - name: start supervisor
+   #become: yes
+   become_user: root
+   shell: | 
+           set timeout 200
+           sudo /home/ubuntu/nimbus/apache-storm-1.2.3/bin/storm supervisor
+   #args:
+   #       executable: /bin/storm
+           #shell: /home/ubuntu/nimbus/apache-storm-1.2.3/bin/storm supervisor
+           #/home/ubuntu/nimbus/apache-storm-1.2.3/ bin/storm supervisor
+           #args:
+           #executable: /bin/bash
+
+
+
+

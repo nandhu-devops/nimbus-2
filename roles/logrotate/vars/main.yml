@@ -1,0 +1,13 @@
+logrotate_conf_dir: "/etc/logrotate.d/"
+logrotate_scripts:
+        - name: storm
+          log_dir: '/home/ubuntu/nimbus/apache-storm-1.2.3/logs/'
+          log_extension: 'log'
+          options:
+                  - daily
+                  - rotate 12
+                  - compress
+                  - delaycompress
+                  - missingok
+                  - notifempty
+                  - create 644 root root

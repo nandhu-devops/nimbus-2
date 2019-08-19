@@ -1,0 +1,30 @@
+---
+storm_local_dir: "{{storm.local.dir | default('/opt/storm/storm-data')}}"
+
+java_lib_path: "{{java.library.path | default('/opt/storm/apache-storm-1.0.2/lib/')}}"
+
+storm_version: "{{'1.0.2'}}"
+
+storm_group: "{{'ubuntu'}}"
+
+storm_owner: "{{'ubuntu'}}"
+
+apache_mirror: "{{'http://apache.mirrors.pair.com'}}"
+
+storm_server_1: "{{storm.zookeeper.servers | default('zookeeper-000-gcp.mist.pvt')}}"
+
+storm_server_2: "{{storm.zookeeper.servers | default('zookeeper-001-gcp.mist.pvt')}}"
+
+storm_server_3: "{{storm.zookeeper.servers | default('zookeeper-002-gcp.mist.pvt')}}"
+
+storm_zoo_root: "{{storm.zookeeper.root | default('/storm2')}}"
+
+nimbus_seed: "{{nimbus.seeds | default('[nimbus-000-gcp.mist.pvt]')}}"
+
+nimbus_host: "{{nimbus.host | default('nimbus-000-gcp.mist.pvt')}}"
+
+ui_childopt: "{{ui.childopts | default('-Xmx1024m')}}"
+
+nimbus_childopt: "{{nimbus.childopts | default('-Xmx2048m -Djava.net.preferIPv4Stack=true')}}"
+
+

@@ -1,0 +1,25 @@
+storm.zookeeper.servers:
+        - "{{storm_server_1}}"
+        - "{{storm_server_2}}"
+        - "{{storm_server_3}}"
+
+storm.zookeeper.root: "{{storm_zoo_root}}"
+
+storm.local.dir: "{{storm_local_dir}}"
+
+java.library.path: "{{java_lib_path}}"
+
+nimbus.host: "{{nimbus_host}}"
+
+nimbus.seeds: "{{nimbus_seed}}"
+
+topology.max.spout.pending: 32
+
+ui.childopts: "{{ui_childopt}}"
+
+nimbus.childopts: "{{nimbus_childopt}}"
+
+supervisor.slots.ports:
+  - 6700
+  - 6701
+  - 6702
